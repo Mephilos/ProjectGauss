@@ -1,0 +1,16 @@
+{
+    "name": "Client.Test",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6a8e83b5a05f343f8aa6e54dc794d298"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
