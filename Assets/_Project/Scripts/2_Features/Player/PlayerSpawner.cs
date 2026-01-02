@@ -1,19 +1,17 @@
 using UnityEngine;
 using ProjectGauss.Core;
 
-
 namespace ProjectGauss.Player
 {
     public class PlayerSpawner : MonoBehaviour, IInitializer
     {
         [SerializeField] PlayerController playerPrefab;
         [SerializeField] Transform spawnPoint;
-
         PlayerController currentPlayer;
 
         public void Iniitialize(GameSystems gameSystems)
         {
-
+            SpawnPlayer(gameSystems);
         }
 
         void SpawnPlayer(GameSystems gameSystems)

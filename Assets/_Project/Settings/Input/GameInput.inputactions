@@ -25,7 +25,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "FIre",
+                    "name": "Fire",
                     "type": "Button",
                     "id": "b8d9e8b1-454f-4f21-93da-5d48f4418066",
                     "expectedControlType": "",
@@ -104,11 +104,11 @@
                 {
                     "name": "",
                     "id": "037f07b7-3b72-433d-8728-05941fc21762",
-                    "path": "",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FIre",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
