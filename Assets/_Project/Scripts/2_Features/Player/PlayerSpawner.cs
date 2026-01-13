@@ -16,7 +16,7 @@ namespace ProjectGauss.Player
 
         void SpawnPlayer(GameSystems gameSystems)
         {
-            Vector3 spawnPosition = spawnPoint != null ? spawnPoint.position : Vector3.zero;
+            Vector3 spawnPosition = spawnPoint.position;
 
             currentPlayer = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
             currentPlayer.Initialize(gameSystems);
