@@ -1,6 +1,8 @@
 using UnityEngine;
+using Unity.Cinemachine;
 using ProjectGauss.Core;
 using ProjectGauss.Input;
+
 
 namespace ProjectGauss.Player
 {
@@ -15,6 +17,7 @@ namespace ProjectGauss.Player
         [SerializeField] float moveSpeed = 5f;
         Rigidbody rb;
         GameSystems systems;
+        Transform cameraRigPoint;
 
         void Awake()
         {
@@ -41,6 +44,14 @@ namespace ProjectGauss.Player
         void Start()
         {
             StateMachine.Initialize(IdleState);
+            ConnectToCinemachine();
+        }
+
+        void ConnectToCinemachine()
+        {
+            CinemachineCamera cinemachineCamera = FindFirstObjectByType<CinemachineCamera>();
+
+            cinemachineCamera.Follow = this.transform;
         }
 
         public void Initialize(GameSystems systems)

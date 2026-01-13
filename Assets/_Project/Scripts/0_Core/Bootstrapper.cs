@@ -7,7 +7,7 @@ namespace ProjectGauss.Core
         void Awake()
         {
             GameSystems gameSystems = new GameSystems();
-            IInitializer[] managers = GetComponentsInChildren<IInitializer>();
+            IInitializable[] managers = GetComponentsInChildren<IInitializable>();
 
             foreach (var manager in managers)
             {

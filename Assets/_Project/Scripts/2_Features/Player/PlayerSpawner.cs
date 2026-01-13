@@ -3,7 +3,7 @@ using ProjectGauss.Core;
 
 namespace ProjectGauss.Player
 {
-    public class PlayerSpawner : MonoBehaviour, IInitializer
+    public class PlayerSpawner : MonoBehaviour, IInitializable
     {
         [SerializeField] PlayerController playerPrefab;
         [SerializeField] Transform spawnPoint;

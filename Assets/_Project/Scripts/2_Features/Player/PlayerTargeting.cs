@@ -105,6 +105,10 @@ namespace ProjectGauss.Player
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, scanRange);
 
+            Gizmos.color = Color.azure;
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward * 2f);
+            Gizmos.DrawSphere(transform.position + transform.forward * 2f, 0.1f);
+
             if (manualTarget != null)
             {
                 Gizmos.color = Color.yellow;

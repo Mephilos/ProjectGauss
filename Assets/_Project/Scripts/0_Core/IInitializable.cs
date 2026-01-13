@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ProjectGauss.Core
 {
-    public interface IInitializer
+    public interface IInitializable
     {
         void Iniitialize(GameSystems gameSystems);
     }
