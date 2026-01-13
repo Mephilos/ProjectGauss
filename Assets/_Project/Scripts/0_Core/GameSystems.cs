@@ -1,9 +1,13 @@
-using UnityEngine;
+using ProjectGauss.Systems;
 
 namespace ProjectGauss.Core
 {
     public class GameSystems
     {
-        public GameSystems() { }
+        public HeightSystem HeightSystem { get; private set; }
+        public GameSystems()
+        {
+            HeightSystem = new HeightSystem();
+        }
     }
 }

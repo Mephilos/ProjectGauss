@@ -1,9 +1,10 @@
+using ProjectGauss.Core;
 using UnityEngine;
 
 namespace ProjectGauss.Player
 {
     public interface IWeaponStrategy
     {
-        void Fire(Vector3 origin, Vector3 dir);
+        void Fire(Vector3 origin, Vector3 dir, Vector3 targetPosition, GameSystems gameSystems);
     }
 }
