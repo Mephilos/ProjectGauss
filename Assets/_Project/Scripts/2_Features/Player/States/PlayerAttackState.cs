@@ -31,7 +31,7 @@ namespace ProjectGauss.Player
 
             controller.LookAt(target.position);
 
-            // TODO: 공격 로직 구현
+            controller.CurrentWeapon.Fire(controller.FirePoint.position, controller.transform.forward);
         }
     }
 }

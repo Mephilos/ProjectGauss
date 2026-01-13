@@ -11,10 +11,18 @@ namespace ProjectGauss.Player
         public GameInput Input { get; private set; }
         public PlayerTargeting Targeting { get; private set; }
         public PlayerStateMachine StateMachine { get; private set; }
+
         public PlayerMoveState MoveState { get; private set; }
         public PlayerAttackState AttackState { get; private set; }
         public PlayerIdleState IdleState { get; private set; }
+
+        public IWeaponStrategy CurrentWeapon { get; private set; }
         [SerializeField] float moveSpeed = 5f;
+        [SerializeField] RifleStrategy startingWeapon;
+        [SerializeField] Transform firePoint;
+        public Transform FirePoint => firePoint;
+
+
         Rigidbody rb;
         GameSystems systems;
         Transform cameraRigPoint;
@@ -29,6 +37,8 @@ namespace ProjectGauss.Player
             MoveState = new PlayerMoveState(this);
             AttackState = new PlayerAttackState(this);
             IdleState = new PlayerIdleState(this);
+
+            CurrentWeapon = startingWeapon;
         }
 
         void OnEnable()
