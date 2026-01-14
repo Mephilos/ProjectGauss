@@ -22,7 +22,7 @@ namespace ProjectGauss.Player
                 return;
             }
 
-            controller.LookAtMouse();
+            //controller.LookAtMouse();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ProjectGauss.Player
             if (input.sqrMagnitude > 0.01f)
             {
                 controller.Move(dir);
-                controller.LookAtMouse();
+                // controller.LookAtMouse();
             }
             else
             {

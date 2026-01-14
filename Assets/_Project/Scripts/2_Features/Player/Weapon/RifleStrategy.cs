@@ -31,7 +31,7 @@ namespace ProjectGauss.Player
             }
             else if (result.damageMultiplier > 1f)
             {
-
+                Debug.Log("고지대 보너스");
             }
 
             Projectile bullet = Instantiate(bulletPrefab, origin, Quaternion.LookRotation(finalDir));

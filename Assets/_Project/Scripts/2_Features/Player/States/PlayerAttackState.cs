@@ -4,9 +4,7 @@ namespace ProjectGauss.Player
 {
     public class PlayerAttackState : PlayerStateBase
     {
-        public PlayerAttackState(PlayerController controller) : base(controller)
-        {
-        }
+        public PlayerAttackState(PlayerController controller) : base(controller) { }
 
         public override void Enter()
         {
@@ -30,8 +28,12 @@ namespace ProjectGauss.Player
             }
 
             controller.LookAt(target.position);
+            controller.Aim(target.position);
 
-            controller.CurrentWeapon.Fire(controller.FirePoint.position, controller.transform.forward);
+            controller.CurrentWeapon.Fire(
+                controller.FirePoint.position, controller.FirePoint.forward,
+                target.position, controller.Systems
+            );
         }
     }
 }

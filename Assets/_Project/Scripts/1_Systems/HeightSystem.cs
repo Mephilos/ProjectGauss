@@ -4,7 +4,7 @@ namespace ProjectGauss.Systems
 {
     public class HeightSystem
     {
-        const float FLOOR_HEIGHT_THRESHOLD = 4f;
+        const float FLOOR_HEIGHT_THRESHOLD = 3f;
         const float LOW_TO_HIGH_MISS_CHANCE = .3f;
         const float HIGH_TO_LOW_DAMAGE_BONUS = 1.2f;
 

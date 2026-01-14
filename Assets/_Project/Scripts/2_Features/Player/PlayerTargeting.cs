@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ProjectGauss.Input;
+using ProjectGauss.Core;
+using ProjectGauss.Systems;
+using System;
 
 namespace ProjectGauss.Player
 {
@@ -8,12 +11,16 @@ namespace ProjectGauss.Player
     {
         [SerializeField] float scanRange = 10f;
         [SerializeField] LayerMask enemyLayer;
+        [SerializeField] LayerMask obstacleLayer;
+        [SerializeField] Transform eyeTransform;
 
         Transform manualTarget;
         Transform nearestTarget;
         GameInput inputs;
         Camera mainCam;
+        SightSystem sightSystem;
 
+        public event Action OnTargetingFailed;
         public Transform CurrentTarget
         {
             get
@@ -23,26 +30,24 @@ namespace ProjectGauss.Player
             }
         }
 
-        private void Awake()
+        void Awake()
         {
             mainCam = Camera.main;
         }
 
-        public void Initialize(GameInput inputs)
+        public void Initialize(GameInput inputs, GameSystems systems)
         {
+            this.sightSystem = systems.SightSystem;
             this.inputs = inputs;
             this.inputs.Player.Fire.performed += OnFirePerformed;
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
-            if (inputs != null)
-            {
-                inputs.Player.Fire.performed -= OnFirePerformed;
-            }
+            inputs.Player.Fire.performed -= OnFirePerformed;
         }
 
-        private void Update()
+        void Update()
         {
             UpdateNearestTarget();
 
@@ -52,7 +57,7 @@ namespace ProjectGauss.Player
             }
         }
 
-        private void OnFirePerformed(InputAction.CallbackContext context)
+        void OnFirePerformed(InputAction.CallbackContext context)
         {
             Vector2 mousePosition = inputs.Player.Look.ReadValue<Vector2>();
 
@@ -60,7 +65,19 @@ namespace ProjectGauss.Player
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, enemyLayer))
             {
-                manualTarget = hit.transform;
+                Transform targetCondidate = hit.transform;
+
+                if (IsVisible(targetCondidate))
+                {
+                    manualTarget = targetCondidate;
+                    Debug.Log($"타겟 지정 성공{manualTarget}");
+                }
+                else
+                {
+                    Debug.LogWarning("타켓팅 불가능 (레이판정)");
+                    OnTargetingFailed?.Invoke();
+                    manualTarget = null;
+                }
             }
 
             else
@@ -69,7 +86,7 @@ namespace ProjectGauss.Player
             }
         }
 
-        private void UpdateNearestTarget()
+        void UpdateNearestTarget()
         {
             Collider[] enemies = Physics.OverlapSphere(transform.position, scanRange, enemyLayer);
 
@@ -79,6 +96,7 @@ namespace ProjectGauss.Player
             foreach (var enemy in enemies)
             {
                 if (!enemy.gameObject.activeInHierarchy) continue;
+                if (!IsVisible(enemy.transform)) continue;
 
                 float dst = Vector3.Distance(transform.position, enemy.transform.position);
                 if (dst < minDst)
@@ -91,16 +109,22 @@ namespace ProjectGauss.Player
             nearestTarget = closest;
         }
 
-        private bool IsTargetValid(Transform target)
+        bool IsTargetValid(Transform target)
         {
             if (target == null) return false;
             if (!target.gameObject.activeInHierarchy) return false;
 
             float dist = Vector3.Distance(transform.position, target.position);
-            return dist <= scanRange + 0.5f;
+            return dist <= scanRange + 0.5f && IsVisible(target);
         }
 
-        private void OnDrawGizmosSelected()
+        bool IsVisible(Transform target)
+        {
+            Vector3 originPosition = eyeTransform.position;
+            return sightSystem.SightCheck(originPosition, target.position, obstacleLayer);
+        }
+
+        void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, scanRange);

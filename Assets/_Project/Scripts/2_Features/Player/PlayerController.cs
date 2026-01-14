@@ -17,6 +17,8 @@ namespace ProjectGauss.Player
         public PlayerIdleState IdleState { get; private set; }
 
         public IWeaponStrategy CurrentWeapon { get; private set; }
+        public GameSystems Systems { get; private set; }
+
         [SerializeField] float moveSpeed = 5f;
         [SerializeField] RifleStrategy startingWeapon;
         [SerializeField] Transform firePoint;
@@ -24,8 +26,7 @@ namespace ProjectGauss.Player
 
 
         Rigidbody rb;
-        GameSystems systems;
-        Transform cameraRigPoint;
+        // Transform cameraRigPoint;
 
         void Awake()
         {
@@ -66,8 +67,8 @@ namespace ProjectGauss.Player
 
         public void Initialize(GameSystems systems)
         {
-            this.systems = systems;
-            Targeting.Initialize(Input);
+            this.Systems = systems;
+            Targeting.Initialize(Input, systems);
         }
 
         void Update()
@@ -108,6 +109,13 @@ namespace ProjectGauss.Player
                 Vector3 hitPoint = ray.GetPoint(enter);
                 LookAt(hitPoint);
             }
+        }
+
+        public void Aim(Vector3 targetPosition)
+        {
+            Vector3 aimDir = (targetPosition - firePoint.position).normalized;
+
+            firePoint.rotation = Quaternion.LookRotation(aimDir);
         }
     }
 }
